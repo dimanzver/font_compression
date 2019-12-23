@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Конвертировать Unicode-диапазоны в строку для codes.txt</title>
+</head>
+<body>
+    <script>
+        var input = prompt('Unicode Диапазон(-ы) через ; (Пример: 0000-00FF;1100-11FF)');
+        var ranges = input.split(';');
+        var result = "";
+        ranges.forEach(range => {
+            let [start, end] = range.split('-').map(item => {
+                return parseInt('0x' + item);
+            });
+
+            for(let i = start; i<=end; i++){
+                result += 'U+' + Number(i).toString(16).padStart(4, 0).toUpperCase() +  "\n";
+            }
+        });
+
+
+        console.log(result);
+        navigator.clipboard.writeText(result)
+            .then(() => {
+                alert('Результат скопирован в буфер обмена');
+            });
+        
+    </script>
+</body>
+</html>
